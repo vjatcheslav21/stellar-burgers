@@ -17,16 +17,50 @@
     "jsx": "react-jsx",
     "types": ["node", "jest"],
     "baseUrl": ".",
+    // "paths": {
+    //   "@pages": ["src/pages"],
+    //   "@components": ["src/components"],
+    //   "@ui": ["src/components/ui"],
+    //   "@ui-pages": ["src/components/ui/pages"],
+    //   "@utils-types": ["src/utils/types"],
+    //   "@api": ["src/utils/burger-api.ts"],
+    //   "@slices/*": ["src/storage/slices/*"],
+    //   "@selectors": ["src/services"],
+    //   "@hooks/*": ["src/storage/hooks/*"],
+    //   "@store": ["src/storage/*"]
+    // }
     "paths": {
       "@pages": ["src/pages"],
+      "@pages/*": ["src/pages/*"],
       "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
       "@ui": ["src/components/ui"],
+      "@ui/*": ["src/components/ui/*"],
       "@ui-pages": ["src/components/ui/pages"],
+      "@ui-pages/*": ["src/components/ui/pages/*"],
       "@utils-types": ["src/utils/types"],
       "@api": ["src/utils/burger-api.ts"],
-      "@slices": ["src/services/slices"],
-      "@selectors": ["src/services/selectors"]
+      "@slices": ["src/storage/slices"],
+      "@slices/*": ["src/storage/slices/*"],
+      "@thunks": ["src/storage/thunks"],
+      "@thunks/*": ["src/storage/thunks/*"],
+      "@store": ["src/storage/store.ts"]
     }
   },
   "include": ["src"]
 }
+
+//   "baseUrl": "src",
+//   "paths": {
+//     "@pages": ["pages/*"],
+//     "@components": ["components/*"],
+//     "@ui": ["components/ui/*"],
+//     "@ui-pages": ["components/ui/pages/*"],
+//     "@utils-types": ["utils/types/*"],
+//     "@api": ["utils/burger-api.ts"],
+//     "@slices/*": ["storage/slices/*"],
+//     "@selectors": ["services/*"],
+//     "@hooks/*": ["storage/hooks/*"],
+
+
+//     "@store": ["storage/*"]

@@ -12,9 +12,7 @@ export type TIngredient = {
   image_mobile: string;
 };
 
-export type TConstructorIngredient = TIngredient & {
-  id: string;
-};
+export type TConstructorIngredient = TIngredient & { id: string };
 
 export type TOrder = {
   _id: string;
@@ -32,9 +30,13 @@ export type TOrdersData = {
   totalToday: number;
 };
 
-export type TUser = {
-  email: string;
-  name: string;
-};
+export type TUser = { email: string; name: string };
 
 export type TTabMode = 'bun' | 'sauce' | 'main';
+
+export const enum RequestStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Failed = 'Failed'
+}

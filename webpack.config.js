@@ -7,17 +7,11 @@ module.exports = {
   entry: path.resolve(__dirname, './src/index.tsx'),
   module: {
     rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      },
+      { test: /\.(js|jsx)$/, exclude: /node_modules/, use: ['babel-loader'] },
       {
         test: /\.(ts)x?$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'ts-loader'
-        }
+        use: { loader: 'ts-loader' }
       },
       {
         test: /\.css$/,
@@ -29,31 +23,16 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true
-            }
-          }
+          { loader: 'css-loader', options: { modules: true } }
         ]
       },
-      {
-        test: /\.(jpg|jpeg|png|svg)$/,
-        type: 'asset/resource'
-      },
-      {
-        test: /\.(woff|woff2)$/,
-        type: 'asset/resource'
-      }
+      { test: /\.(jpg|jpeg|png|svg)$/, type: 'asset/resource' },
+      { test: /\.(woff|woff2)$/, type: 'asset/resource' }
     ]
   },
   plugins: [
-    new ESLintPlugin({
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
-    }),
-    new HtmlWebpackPlugin({
-      template: './public/index.html'
-    }),
+    new ESLintPlugin({ extensions: ['.js', '.jsx', '.ts', '.tsx'] }),
+    new HtmlWebpackPlugin({ template: './public/index.html' }),
     new Dotenv()
   ],
   resolve: {
@@ -77,8 +56,9 @@ module.exports = {
       '@ui-pages': path.resolve(__dirname, './src/components/ui/pages'),
       '@utils-types': path.resolve(__dirname, './src/utils/types'),
       '@api': path.resolve(__dirname, './src/utils/burger-api.ts'),
-      '@slices': path.resolve(__dirname, './src/services/slices'),
-      '@selectors': path.resolve(__dirname, './src/services/selectors')
+      '@slices': path.resolve(__dirname, 'src/storage/slices/'),
+      '@thunks': path.resolve(__dirname, 'src/storage/thunks/'),
+      '@store': path.resolve(__dirname, 'src/storage/store.ts')
     }
   },
   output: {
@@ -89,6 +69,7 @@ module.exports = {
     static: path.join(__dirname, './dist'),
     compress: true,
     historyApiFallback: true,
-    port: 4000
+    port: 4000,
+    open: true
   }
 };
