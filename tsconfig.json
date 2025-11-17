@@ -39,6 +39,7 @@
       "@ui-pages": ["src/components/ui/pages"],
       "@ui-pages/*": ["src/components/ui/pages/*"],
       "@utils-types": ["src/utils/types"],
+      "@utils-redux": ["src/utils/redux"],
       "@api": ["src/utils/burger-api.ts"],
       "@slices": ["src/storage/slices"],
       "@slices/*": ["src/storage/slices/*"],

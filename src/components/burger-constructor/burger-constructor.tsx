@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
@@ -17,8 +17,8 @@ export const BurgerConstructor: FC = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const orderRequest = useSelector(orderSelectors.orderRequestSelect);
-  const orderModalData = useSelector(orderSelectors.orderDataSelect);
+  const orderRequest = useSelector(orderSelectors.newOrderRequestSelect);
+  const orderModalData = useSelector(orderSelectors.newOrderSelect);
   const user = useSelector(userSelectors.userSelect);
 
   const onOrderClick = () => {
@@ -37,16 +37,10 @@ export const BurgerConstructor: FC = () => {
 
   const closeOrderModal = () => {
     if (orderModalData) {
-      dispatch(orderActions.clearOrder());
+      dispatch(orderActions.clearNewOrder());
       dispatch(constructorActions.clearConstructor());
     }
   };
-
-  // const closeOrderRequestModal = () => {
-  //   if (orderRequest) {
-  //   console.log('im here');
-  //   }
-  // };
 
   const price = useMemo(
     () =>
@@ -66,7 +60,6 @@ export const BurgerConstructor: FC = () => {
       orderModalData={orderModalData}
       onOrderClick={onOrderClick}
       closeOrderModal={closeOrderModal}
-      // closeOrderRequestModal={closeOrderRequestModal}
     />
   );
 };

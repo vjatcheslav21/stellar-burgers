@@ -4,14 +4,20 @@ import { ORDER_SLICE_NAME } from '@slices/sliceNames';
 import { createOrder, fetchOrderByNumber } from '@thunks/orderThunk';
 
 export type OrderState = {
-  orderRequest: boolean;
-  orderData: TOrder | null;
+  // Данные созданного заказа (для модалки в конструкторе)
+  newOrder: TOrder | null;
+  newOrderRequest: boolean;
+  // Данные заказа, полученного по ID (для страницы деталей)
+  currentOrder: TOrder | null;
+  currentOrderLoading: boolean;
   requestStatus: RequestStatus;
 };
 
 const initialState: OrderState = {
-  orderRequest: false,
-  orderData: null,
+  newOrder: null,
+  newOrderRequest: false,
+  currentOrder: null,
+  currentOrderLoading: false,
   requestStatus: RequestStatus.Idle
 };
 
@@ -19,46 +25,53 @@ const orderSlice = createSlice({
   name: ORDER_SLICE_NAME,
   initialState,
   reducers: {
-    clearOrder(state) {
-      state.orderData = null;
+    clearNewOrder(state) {
+      state.newOrder = null;
+    },
+    clearCurrentOrder(state) {
+      state.currentOrder = null;
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(createOrder.pending, (state) => {
-        state.orderRequest = true;
+        state.newOrderRequest = true;
         state.requestStatus = RequestStatus.Loading;
       })
       .addCase(
         createOrder.fulfilled,
         (state, action: PayloadAction<TOrder>) => {
-          state.orderRequest = false;
-          state.orderData = action.payload;
-
+          state.newOrderRequest = false;
+          state.newOrder = action.payload;
           state.requestStatus = RequestStatus.Success;
         }
       )
       .addCase(createOrder.rejected, (state) => {
-        state.orderRequest = false;
+        state.newOrderRequest = false;
         state.requestStatus = RequestStatus.Failed;
       })
       .addCase(fetchOrderByNumber.pending, (state) => {
+        state.currentOrderLoading = true;
         state.requestStatus = RequestStatus.Loading;
       })
       .addCase(
         fetchOrderByNumber.fulfilled,
         (state, action: PayloadAction<TOrder>) => {
-          state.orderData = action.payload;
+          state.currentOrderLoading = false;
+          state.currentOrder = action.payload;
           state.requestStatus = RequestStatus.Success;
         }
       )
       .addCase(fetchOrderByNumber.rejected, (state) => {
+        state.currentOrderLoading = false;
         state.requestStatus = RequestStatus.Failed;
       });
   },
   selectors: {
-    orderRequestSelect: (state) => state.orderRequest,
-    orderDataSelect: (state) => state.orderData,
+    newOrderSelect: (state) => state.newOrder,
+    newOrderRequestSelect: (state) => state.newOrderRequest,
+    currentOrderSelect: (state) => state.currentOrder,
+    currentOrderLoadingSelect: (state) => state.currentOrderLoading,
     orderIsLoadingSelect: (state) =>
       state.requestStatus === RequestStatus.Loading
   }

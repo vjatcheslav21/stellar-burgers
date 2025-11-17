@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { USER_SLICE_NAME } from '@slices/sliceNames';
 import {
-  fetchUser,
-  loginUser,
-  registerUser,
-  updateUser
-} from '@thunks/userThunk';
+  isActionFulfilled,
+  isActionPending,
+  isActionRejected
+} from '@utils-redux';
 import { RequestStatus, TUser } from '@utils-types';
+import { USER_SLICE_NAME } from '@slices/sliceNames';
+import { updateUser } from '@thunks/userThunk';
 
 interface UserState {
   user: TUser | null;
@@ -33,62 +33,24 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.pending, (state) => {
-        state.requestStatus = RequestStatus.Loading;
-      })
-      .addCase(fetchUser.fulfilled, (state, action: PayloadAction<TUser>) => {
+      .addCase(updateUser.fulfilled, (state, action: PayloadAction<TUser>) => {
         state.user = action.payload;
-        state.userCheck = true;
         state.requestStatus = RequestStatus.Success;
       })
-      .addCase(fetchUser.rejected, (state) => {
-        state.userCheck = true;
-        state.requestStatus = RequestStatus.Failed;
-      })
-      .addCase(loginUser.pending, (state) => {
+      .addMatcher(isActionPending(USER_SLICE_NAME), (state) => {
         state.requestStatus = RequestStatus.Loading;
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<TUser>) => {
-        state.user = action.payload;
-        state.userCheck = true;
-        state.requestStatus = RequestStatus.Success;
-      })
-      .addCase(loginUser.rejected, (state) => {
-        state.userCheck = true;
-        state.requestStatus = RequestStatus.Failed;
-      })
-      .addCase(registerUser.pending, (state) => {
-        state.requestStatus = RequestStatus.Loading;
-      })
-      .addCase(
-        registerUser.fulfilled,
+      .addMatcher(
+        isActionFulfilled(USER_SLICE_NAME),
         (state, action: PayloadAction<TUser>) => {
           state.user = action.payload;
           state.userCheck = true;
           state.requestStatus = RequestStatus.Success;
         }
       )
-      .addCase(registerUser.rejected, (state) => {
-        state.userCheck = true;
-        state.requestStatus = RequestStatus.Failed;
-      })
-      .addCase(updateUser.pending, (state) => {
-        state.requestStatus = RequestStatus.Loading;
-      })
-      .addCase(updateUser.fulfilled, (state, action: PayloadAction<TUser>) => {
-        state.user = action.payload;
-        state.requestStatus = RequestStatus.Success;
-      })
-      .addCase(updateUser.rejected, (state) => {
-        state.userCheck = true;
+      .addMatcher(isActionRejected(USER_SLICE_NAME), (state) => {
         state.requestStatus = RequestStatus.Failed;
       });
-    // .addMatcher(
-    //   (action) => action.type === 'user/fetchUser/pending',
-    //   (state) => {
-    //     state.user = { email: 'test@ya.ru', name: 'test' };
-    //   }
-    // );
   },
   selectors: {
     userSelect: (state) => state.user,

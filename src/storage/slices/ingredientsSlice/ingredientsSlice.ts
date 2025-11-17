@@ -2,6 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus, TIngredient } from '@utils-types';
 import { INGREDIENTS_SLICE_NAME } from '@slices/sliceNames';
 import { fetchIngredients } from '@thunks/ingredientsThunk';
+import {
+  isActionFulfilled,
+  isActionPending,
+  isActionRejected
+} from '@utils-redux';
 
 interface IngredientsState {
   ingredients: TIngredient[];
@@ -19,17 +24,17 @@ const ingredientsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchIngredients.pending, (state) => {
+      .addMatcher(isActionPending(INGREDIENTS_SLICE_NAME), (state) => {
         state.requestStatus = RequestStatus.Loading;
       })
-      .addCase(
-        fetchIngredients.fulfilled,
+      .addMatcher(
+        isActionFulfilled(INGREDIENTS_SLICE_NAME),
         (state, action: PayloadAction<TIngredient[]>) => {
           state.ingredients = action.payload;
           state.requestStatus = RequestStatus.Success;
         }
       )
-      .addCase(fetchIngredients.rejected, (state) => {
+      .addMatcher(isActionRejected(INGREDIENTS_SLICE_NAME), (state) => {
         state.requestStatus = RequestStatus.Failed;
       });
   },
