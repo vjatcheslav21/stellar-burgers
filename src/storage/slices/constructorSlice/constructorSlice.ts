@@ -17,17 +17,24 @@ const constructorSlice = createSlice({
   name: CONSTRUCTOR_SLICE_NAME,
   initialState: constructorInitialState,
   reducers: {
-    addIngredient(state, action: PayloadAction<{ ingredient: TIngredient }>) {
-      const { ingredient } = action.payload;
-      const newIngredient: TConstructorIngredient = {
-        ...ingredient,
-        id: uuidv4()
-      };
-
-      if (ingredient.type === 'bun') {
-        state.bun = newIngredient;
-      } else {
-        state.ingredients.push(newIngredient);
+    addIngredient: {
+      reducer: (
+        state,
+        action: PayloadAction<{ ingredient: TConstructorIngredient }>
+      ) => {
+        const { ingredient } = action.payload;
+        if (ingredient.type === 'bun') {
+          state.bun = ingredient;
+        } else {
+          state.ingredients.push(ingredient);
+        }
+      },
+      prepare: (ingredient: TIngredient) => {
+        const newIngredient: TConstructorIngredient = {
+          ...ingredient,
+          id: uuidv4()
+        };
+        return { payload: { ingredient: newIngredient } };
       }
     },
     removeIngredient(state, action: PayloadAction<{ id: string }>) {
@@ -50,7 +57,15 @@ const constructorSlice = createSlice({
   selectors: {
     constructorBurgerElement: (state) => state,
     constructorBurgerIsBun: (state) => state.bun,
-    constructorBurgerIsIngredients: (state) => state.ingredients
+    constructorBurgerIsIngredients: (state) => state.ingredients,
+    getIngredientCount: (state, ingredientId: string) => {
+      if (state.bun && state.bun._id === ingredientId) {
+        return 2;
+      }
+      return state.ingredients.filter(
+        (ingredient) => ingredient._id === ingredientId
+      ).length;
+    }
   }
 });
 

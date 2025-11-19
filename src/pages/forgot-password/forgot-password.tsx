@@ -2,7 +2,7 @@ import { FC, useState, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ForgotPasswordUI } from '@ui-pages';
 import { Preloader } from '@ui';
-import { useDispatch, useSelector } from '@store';
+import { useDispatch, useSelector } from '@hooks';
 import { forgotPassword } from '@thunks/userThunk';
 import { userSelectors } from '@slices/userSlice/userSlice';
 

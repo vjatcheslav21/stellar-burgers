@@ -44,7 +44,7 @@ export const loginUser = createAsyncThunk(
 );
 
 export const updateUser = createAsyncThunk(
-  '${USER_SLICE_NAME}/update',
+  `${USER_SLICE_NAME}/update`,
   async (data: Partial<TRegisterData>) => {
     const res = await updateUserApi(data);
     return res.user;

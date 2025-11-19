@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ResetPasswordUI } from '@ui-pages';
-import { useDispatch } from '@store';
+import { useDispatch } from '@hooks';
 import { resetPassword } from '@thunks/userThunk';
 
 export const ResetPassword: FC = () => {

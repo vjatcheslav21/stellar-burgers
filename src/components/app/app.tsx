@@ -15,7 +15,7 @@ import '../../index.css';
 import styles from './app.module.css';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from '@store';
+import { useDispatch } from '@hooks';
 import { fetchUser } from '@thunks/userThunk';
 import { fetchIngredients } from '@thunks/ingredientsThunk';
 import { userActions } from '@slices/userSlice/userSlice';
@@ -103,6 +103,15 @@ export default function App() {
 
         <Route path='/feed/:number' element={<OrderInfo />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+              <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path='/ingredients/:id'
           element={

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus, TIngredient } from '@utils-types';
 import { INGREDIENTS_SLICE_NAME } from '@slices/sliceNames';
-import { fetchIngredients } from '@thunks/ingredientsThunk';
 import {
   isActionFulfilled,
   isActionPending,

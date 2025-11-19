@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
-import { useDispatch, useSelector } from '@store';
+import { useDispatch, useSelector } from '@hooks';
 import { fetchFeed } from '@thunks/feedsThunk';
 import { feedsSelectors } from '@slices/feedsSlice/feedsSlice';
 

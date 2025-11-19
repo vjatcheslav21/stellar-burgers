@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { ProfileOrdersUI } from '@ui-pages';
 import { Preloader } from '@ui';
-import { useDispatch, useSelector } from '@store';
+import { useDispatch, useSelector } from '@hooks';
 import { fetchProfileOrders } from '@thunks/feedsThunk';
 import { feedsSelectors } from '@slices/feedsSlice/feedsSlice';
 

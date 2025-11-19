@@ -45,7 +45,8 @@
       "@slices/*": ["src/storage/slices/*"],
       "@thunks": ["src/storage/thunks"],
       "@thunks/*": ["src/storage/thunks/*"],
-      "@store": ["src/storage/store.ts"]
+      "@store": ["src/storage/store.ts"],
+      "@hooks": ["src/storage/hooks/hooks.ts"]
     }
   },
   "include": ["src"]

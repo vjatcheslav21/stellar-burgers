@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RegisterUI } from '@ui-pages';
-import { useDispatch, useSelector } from '@store';
+import { useDispatch, useSelector } from '@hooks';
 import { userSelectors } from '@slices/userSlice/userSlice';
 import { registerUser } from '@thunks/userThunk';
 
