@@ -8,7 +8,7 @@ import {
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import store, { RootState } from '@store';
 
 export type AppDispatch = typeof store.dispatch;
@@ -36,3 +36,14 @@ export const useActionsCreators = <Actions extends ActionCreatorsMapObject>(
     [actions, dispatch]
   );
 };
+
+export function useForm<T>(initialValues: T) {
+  const [values, setValues] = useState<T>(initialValues);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  return { values, handleChange, setValues };
+}
