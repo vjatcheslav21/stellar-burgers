@@ -1,5 +1,5 @@
 import { setCookie, getCookie } from './cookie';
-import { TIngredient, TOrder, TOrdersData, TUser } from './types';
+import { TIngredient, TOrder, TUser } from './types';
 
 const BASE_URL = process.env.BURGER_API_URL;
 
@@ -19,7 +19,6 @@ const request = async <T>(
   if (data && typeof data === 'object' && 'success' in data && !data.success) {
     return Promise.reject(data);
   }
-
   return data;
 };
 
