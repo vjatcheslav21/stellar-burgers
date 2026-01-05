@@ -4,10 +4,8 @@ import { ORDER_SLICE_NAME } from '@slices/sliceNames';
 import { createOrder, fetchOrderByNumber } from '@thunks/orderThunk';
 
 export type OrderState = {
-  // Данные созданного заказа (для модалки в конструкторе)
   newOrder: TOrder | null;
   newOrderRequest: boolean;
-  // Данные заказа, полученного по ID (для страницы деталей)
   currentOrder: TOrder | null;
   currentOrderLoading: boolean;
   requestStatus: RequestStatus;
