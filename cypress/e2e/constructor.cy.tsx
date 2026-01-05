@@ -6,32 +6,35 @@ describe('Интеграционные тесты на Cypress написаны 
       cy.viewport(1300, 800);
     });
 
-    it('Тест открытия модального окна', function () {
-      cy.contains(
-        '[data-cy="ingredient"]',
-        'Соус традиционный галактический'
-      ).click();
+    it('Тест открытия модального окна конкретного ингредиента', function () {
+      const ingredientName = 'Соус традиционный галактический';
+      const ingredientCalories = '99';
+      cy.contains('[data-cy="ingredient"]', ingredientName).click();
       cy.get('[data-cy="modal"]').should('be.visible');
+      cy.get('[data-cy="modal-ingredient-name"]').should(
+        'contain',
+        ingredientName
+      );
+      cy.get('[data-cy="modal-ingredient-calories"]').should(
+        'contain',
+        ingredientCalories
+      );
     });
 
     it('Тест работы модального окна. Закрытие по клику на крестик', function () {
-      cy.contains(
-        '[data-cy="ingredient"]',
-        'Соус традиционный галактический'
-      ).click();
-      cy.get('[data-cy="modal"]').should('be.visible');
+      const ingredientName = 'Соус традиционный галактический';
+      cy.contains('[data-cy="ingredient"]', ingredientName).click();
+      cy.get('[data-cy="modal"]').as('modal').should('be.visible');
       cy.get('[data-cy="modal-close"]').click();
-      cy.get('[data-cy="modal"]').should('not.exist');
+      cy.get('@modal').should('not.exist');
     });
 
     it('Тест работы модального окна. Закрытие по клику на оверлей', function () {
-      cy.contains(
-        '[data-cy="ingredient"]',
-        'Соус традиционный галактический'
-      ).click();
-      cy.get('[data-cy="modal"]').should('be.visible');
+      const ingredientName = 'Соус традиционный галактический';
+      cy.contains('[data-cy="ingredient"]', ingredientName).click();
+      cy.get('[data-cy="modal"]').as('modal').should('be.visible');
       cy.get('[data-cy="modal-overlay"]').click({ force: true });
-      cy.get('[data-cy="modal"]').should('not.exist');
+      cy.get('@modal').should('not.exist');
     });
   });
 
@@ -47,14 +50,16 @@ describe('Интеграционные тесты на Cypress написаны 
     });
 
     it('Добавление ингредиента из списка в конструктор', function () {
-      cy.get('[data-cy="constructor"]').contains('Выберите булки');
+      cy.get('[data-cy="constructor"]')
+        .as('constructor')
+        .contains('Выберите булки');
       cy.contains(
         '[data-cy="ingredient"]',
         'Биокотлета из марсианской Магнолии'
       ).within(() => {
         cy.contains('button', 'Добавить').click();
       });
-      cy.get('[data-cy="constructor"]').should(
+      cy.get('@constructor').should(
         'contain',
         'Биокотлета из марсианской Магнолии'
       );
@@ -63,27 +68,24 @@ describe('Интеграционные тесты на Cypress написаны 
           cy.contains('button', 'Добавить').click();
         }
       );
-      cy.get('[data-cy="constructor"]').should(
-        'contain',
-        'Краторная булка N-200i'
-      );
+      cy.get('@constructor').should('contain', 'Краторная булка N-200i');
       cy.contains(
         '[data-cy="ingredient"]',
         'Соус традиционный галактический'
       ).within(() => {
         cy.contains('button', 'Добавить').click();
       });
-      cy.get('[data-cy="constructor"]').should(
+      cy.get('@constructor').should(
         'contain',
         'Соус традиционный галактический'
       );
       cy.get('[data-cy="order-button"]').click();
-      cy.get('[data-cy="modal"]').should('be.visible');
+      cy.get('[data-cy="modal"]').as('modal').should('be.visible');
       cy.get('[data-cy="order-number"]').should('contain', '12345');
       cy.get('[data-cy="modal-close"]').click();
-      cy.get('[data-cy="modal"]').should('not.exist');
-      cy.get('[data-cy="constructor"]').should('contain', 'Выберите булки');
-      cy.get('[data-cy="constructor"]').should('contain', 'Выберите начинку');
+      cy.get('@modal').should('not.exist');
+      cy.get('@constructor').should('contain', 'Выберите булки');
+      cy.get('@constructor').should('contain', 'Выберите начинку');
     });
   });
 
