@@ -11,7 +11,7 @@ import {
 } from '@pages';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { ProtectedRoute } from '@components/protected-route/protected-route';
-import '../../index.css';
+// import '../../index.css';
 import styles from './app.module.css';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
