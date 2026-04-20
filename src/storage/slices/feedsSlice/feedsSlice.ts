@@ -2,11 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus, TOrder, TOrdersData } from '@utils-types';
 import { FEEDS_SLICE_NAME } from '@slices/sliceNames';
 import { fetchFeed, fetchProfileOrders } from '@thunks/feedsThunk';
-import {
-  isActionFulfilled,
-  isActionPending,
-  isActionRejected
-} from '@utils-redux';
+import { isActionPending, isActionRejected } from '@utils-redux';
 
 interface FeedsState {
   feeds: TOrdersData | null;

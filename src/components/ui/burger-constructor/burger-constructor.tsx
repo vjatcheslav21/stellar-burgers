@@ -17,9 +17,8 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
   orderModalData,
   onOrderClick,
   closeOrderModal
-  // closeOrderRequestModal
 }) => (
-  <section className={styles.burger_constructor}>
+  <section className={styles.burger_constructor} data-cy='constructor'>
     {constructorItems.bun ? (
       <div className={`${styles.element} mb-4 mr-4`}>
         <ConstructorElement
@@ -85,11 +84,11 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         size='large'
         children='Оформить заказ'
         onClick={onOrderClick}
+        data-cy='order-button'
       />
     </div>
 
     {orderRequest && (
-      // <Modal onClose={closeOrderRequestModal} title={'Оформляем заказ...'}>
       <Modal onClose={closeOrderModal} title={'Оформляем заказ...'}>
         <Preloader />
       </Modal>
